@@ -1,6 +1,6 @@
 import re
 
-def check_password_strength(password):
+def check_password_strength(UserName, password):
    common_passwords = {
        "password", "123456", "123456789", "qwerty",
        "abc123", "letmein", "welcome", "monkey",
@@ -16,7 +16,8 @@ def check_password_strength(password):
        "special": any(not c.isalnum() for c in password),
        "not_common": not any(common in password.lower() for common in common_passwords),
        "no_repeats": not re.search(r'(.)\1{2,}', password),
-       "no_sequences": not any(seq in password.lower() for seq in sequences)
+       "no_sequences": not any(seq in password.lower() for seq in sequences),
+       "UserName_check": UserName.lower() not in password.lower()
    }
 
    problems = []
@@ -36,6 +37,8 @@ def check_password_strength(password):
        problems.append("Avoid repeating the same character multiple times.")
    if not checks["no_sequences"]:
        problems.append("Avoid common sequences like '1234' or 'abcd'.")
+   if not checks["UserName_check"]:
+       problems.append("Password should not contain your username.")
 
    score = sum(checks.values())
 
@@ -45,12 +48,13 @@ def check_password_strength(password):
            print(f"- {p}")
 
    ratings = {
-       8: "Outstanding",
-       7: "Excellent",
-       6: "Very Strong",
-       5: "Strong",
-       4: "Good",
-       3: "Moderate",
+       9:"Outstanding",
+       8: "Excellent",
+       7: "Very Strong",
+       6: "Strong",
+       5: "Good",
+       4: "Moderate",
+       3: "Fair",
        2: "Weak",
        1: "Very Weak",
        0: "Super Weak"
@@ -58,7 +62,8 @@ def check_password_strength(password):
 
    return ratings[score], score
 
-
+UserName = input("Enter your username: ")
 password = input("Enter your password: ")
-strength, score = check_password_strength(password)
-print(f"Password strength: {strength} ({score}/8)")
+
+strength, score = check_password_strength(UserName, password)
+print(f"Password strength: {strength} ({score}/9)")
