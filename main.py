@@ -53,7 +53,7 @@ def check_password_strength(password):
        3: "Moderate",
        2: "Weak",
        1: "Very Weak",
-       0: "Very Weak"
+       0: "Super Weak"
    }
 
    return ratings[score], score
