@@ -6,7 +6,10 @@ def check_password_strength(UserName, password):
        "abc123", "letmein", "welcome", "monkey",
        "login", "admin"
    }
-   sequences = ["abc", "123", "abcd", "1234", "qwerty", "12345", "abcdef"]
+   sequences = {
+       "abc", "123", "abcd", "1234",
+       "qwerty", "12345", "abcdef"
+   }
 
    checks = {
        "length": len(password) >= 12,
